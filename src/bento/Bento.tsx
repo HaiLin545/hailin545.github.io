@@ -37,7 +37,7 @@ const PAD = 20;
 const defaultLayout = {
   row: 1,
   col: 1,
-  gap: 10,
+  gap: 8,
   gridSize: 100,
   items: [],
 };

@@ -18,11 +18,6 @@ const ThemeSwitcher = () => {
   const [modeIndex, setModeIndex] = createSignal(0);
   const modes = [ThemeMode.LIGHT, ThemeMode.DARK, ThemeMode.SYSTEM];
 
-  //   const handleChange = (event: Event) => {
-  //     const target = event.target as HTMLSelectElement;
-  //     const selectedMode = target.value as ThemeMode;
-  //     setMode(selectedMode);
-  //   };
   function handleClick() {
     setModeIndex((prev) => (prev + 1) % modes.length);
     const selectedMode = modes[modeIndex()];
@@ -31,7 +26,14 @@ const ThemeSwitcher = () => {
 
   return (
     <div class={style.themeSwitcher} on:click={handleClick}>
-      {ModeNames[mode()]}
+      <div
+        class="text"
+        style={{
+          cursor: "pointer",
+        }}
+      >
+        {ModeNames[mode()]}
+      </div>
     </div>
   );
 };
