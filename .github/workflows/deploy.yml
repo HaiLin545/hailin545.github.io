@@ -37,6 +37,5 @@ jobs:
       uses: peaceiris/actions-gh-pages@v3
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./dist          # 构建输出目录
-        keep_files: false            # 清除目标分支的旧文件
-        destination_dir: .           # 部署到根目录（适用于项目站点）
+        publish_dir: ./dist
+        keep_files: false  

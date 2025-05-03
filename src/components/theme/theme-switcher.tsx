@@ -27,7 +27,6 @@ const ThemeSwitcher = () => {
     setModeIndex((prev) => (prev + 1) % modes.length);
     const selectedMode = modes[modeIndex()];
     setMode(selectedMode);
-    console.log("ThemeSwitcher handleClick", selectedMode);
   }
 
   return (

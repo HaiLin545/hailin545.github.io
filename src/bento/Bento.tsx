@@ -97,13 +97,10 @@ const Bento: Component<BentoProps> = (props) => {
       newSize = (windowWidth - pad) / newCol;
     }
 
-    console.log("fit tight", windowWidth, newCol, newSize, layouts.col, layouts.gridSize);
     // setIsInstant(true);
 
     if (newSize !== layouts.gridSize) {
-      setTimeout(() => {
-        setLayouts("gridSize", newSize);
-      }, 0);
+      setLayouts("gridSize", newSize);
     }
 
     if (newCol !== layouts.col) {
@@ -112,16 +109,10 @@ const Bento: Component<BentoProps> = (props) => {
         return { ...item, w, index } as RectType;
       });
 
-      setTimeout(() => {
-        setLayouts("col", newCol);
-        let { items, grids } = _fitTight(itemsOld);
-        updateLayouts(items, grids);
-      });
+      setLayouts("col", newCol);
+      let { items, grids } = _fitTight(itemsOld);
+      updateLayouts(items, grids);
     }
-
-    setTimeout(() => {
-      setIsInstant(false);
-    }, 10);
   }
 
   function fillGrids(rect: RectType, grids: GridsType) {
@@ -298,7 +289,6 @@ const Bento: Component<BentoProps> = (props) => {
   }
 
   function popTail(grids: GridsType) {
-    console.log("pop tail", grids.length, grids[grids.length - 1]);
     while (grids[grids.length - 1].every((item) => item === -1)) grids.pop();
   }
 

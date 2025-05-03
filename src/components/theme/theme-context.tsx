@@ -14,7 +14,6 @@ export const ThemeProvider = (props: { children: any }) => {
   const [mode, setMode] = createSignal<ThemeContextProps["mode"]>("system");
 
   function setTheme(mode: "light" | "dark") {
-    console.log("ThemeProvider setTheme", mode);
     document.documentElement.setAttribute("data-theme", mode);
     if (mode === "dark") {
       document.documentElement.classList.add("dark");
@@ -36,7 +35,6 @@ export const ThemeProvider = (props: { children: any }) => {
 
   createEffect(() => {
     const currentMode = mode();
-    console.log("ThemeProvider effect", currentMode);
     localStorage.setItem("theme-mode", currentMode);
 
     if (currentMode === "system") {
@@ -45,7 +43,6 @@ export const ThemeProvider = (props: { children: any }) => {
       setTheme(systemMode);
 
       const handleChange = (e: MediaQueryListEvent) => {
-        console.log("ThemeProvider handleChange", e.matches ? "dark" : "light");
         setTheme(e.matches ? "dark" : "light");
       };
       mediaQuery.addEventListener("change", handleChange);
