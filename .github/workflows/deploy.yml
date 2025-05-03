@@ -21,7 +21,9 @@ jobs:
         node-version: 22
 
     - name: Install dependencies
-      run: npm ci
+      run: 
+        - npm i pnpm -g # 全局安装 pnpm
+        - pnpm install --frozen-lockfile # 安装依赖
       # 使用 ci 而不是 install 可以保持 lockfile 一致性
 
     - name: Build project
