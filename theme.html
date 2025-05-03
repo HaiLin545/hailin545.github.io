@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>夜间模式</title>
+    <style>
+        [data-theme="light"] {
+            --background-color: white;
+        }
+        [data-theme="dark"] {
+            --background-color: black;
+        }
+        body {
+            background-color: var(--background-color);
+        }
+        .box {
+            width: 200px;
+            height: 200px;
+            background-color: green;
+        }
+    </style>
+</head>
+<body>
+    <div class="box"></div>
+    <button class="toggle">切换模式</button>
+    <button class="system">跟随系统</button>
+    <script>
+        const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)')
+        const body = document.querySelector('body')
+        if (JSON.parse(localStorage.getItem('sync_system'))) {
+            if (prefersDarkScheme.matches) {
+                body.dataset.theme = "dark"
+            } else {
+                body.dataset.theme = "light"
+            }
+        } else {
+            body.dataset.theme = localStorage.getItem('theme') || 'light'
+        }
+        const toggle = document.querySelector('.toggle')
+        const system = document.querySelector('.system')
+ 
+        toggle.addEventListener('click', () => {
+            updateTheme(body.dataset.theme !== "dark", false)
+        })
+ 
+        system.addEventListener('click', () => {
+            updateTheme(prefersDarkScheme.matches, true)
+        })
+ 
+        const updateTheme = (isDark, isSyncSystem) => {
+            body.dataset.theme = isDark ? "dark" : "light"
+            localStorage.setItem('sync_system', isSyncSystem)
+            localStorage.setItem('theme', body.dataset.theme)
+        }
+    </script>
+</body>
+</html>
