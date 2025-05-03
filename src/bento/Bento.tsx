@@ -79,7 +79,7 @@ const Bento: Component<BentoProps> = (props) => {
 
   function fitTight() {
     let windowWidth = document.body.clientWidth;
-    const rem = Math.max(14, windowWidth / 80);
+    const rem = Math.max(14, windowWidth / 100);
     document.documentElement.style.fontSize = `${rem}px`;
 
     let newCol = 0,
@@ -87,13 +87,13 @@ const Bento: Component<BentoProps> = (props) => {
 
     let pad = windowWidth * 0.15;
     if (windowWidth >= 1000) {
-      newCol = 8;
-      newSize = Math.min(220, (windowWidth - pad) / newCol);
-    } else if (windowWidth >= 600) {
       newCol = 6;
+      newSize = Math.min(180, (windowWidth - pad) / newCol);
+    } else if (windowWidth >= 600) {
+      newCol = 4;
       newSize = (windowWidth - pad) / newCol;
     } else {
-      newCol = 4;
+      newCol = 2;
       newSize = (windowWidth - pad) / newCol;
     }
 
@@ -477,7 +477,9 @@ const Bento: Component<BentoProps> = (props) => {
           <PlaceHolder rect={placeholderRect()} gap={layouts.gap} gridSize={layouts.gridSize}></PlaceHolder>
         </Show>
       </div>
-      <GridBoard row={layouts.row} col={layouts.col} gap={layouts.gap} gridSize={layouts.gridSize} />
+      <Show when={false}>
+        <GridBoard row={layouts.row} col={layouts.col} gap={layouts.gap} gridSize={layouts.gridSize} />
+      </Show>
     </div>
   );
 };
@@ -497,7 +499,7 @@ const PlaceHolder = (props: { rect: RectType; gap: number; gridSize: number }) =
       class="placeholder-item"
       style={{
         border: "1px solid #ccc",
-        "z-index": 2,
+        "z-index": 10,
         position: "absolute",
         transform: `translate(${left()}px, ${top()}px)`,
         height: `${height()}px`,

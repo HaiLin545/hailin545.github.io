@@ -66,13 +66,13 @@ const Hello: Component = () => {
 const App: Component = () => {
   const layouts = {
     items: [
-      { h: 2, w: 2 },
-      { h: 1, w: 4 },
-      { h: 1, w: 4 },
       { h: 1, w: 1 },
       { h: 1, w: 2 },
-      { h: 2, w: 1 },
-      { h: 2, w: 3 },
+      { h: 1, w: 3 },
+      { h: 1, w: 1 },
+      { h: 1, w: 2 },
+      { h: 1, w: 2 },
+      { h: 1, w: 2 },
     ],
   };
 
