@@ -88,7 +88,7 @@ const Bento: Component<BentoProps> = (props) => {
     let pad = windowWidth * 0.15;
     if (windowWidth >= 1000) {
       newCol = 8;
-      newSize = Math.min(300, (windowWidth - pad) / newCol);
+      newSize = Math.min(220, (windowWidth - pad) / newCol);
     } else if (windowWidth >= 600) {
       newCol = 6;
       newSize = (windowWidth - pad) / newCol;
