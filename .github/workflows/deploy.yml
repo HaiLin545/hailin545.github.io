@@ -1,38 +1,36 @@
-name: build to my github
+name: Deploy to GitHub Pages
 
 on:
   push:
-    branches:
-      - master
+    branches: [ "master" ] # 监听 main 分支的推送
 
 jobs:
-  deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
+
+    permissions:
+      contents: write # 允许工作流写入仓库
+
     steps:
-      - uses: actions/checkout@lastest
-        with:
-          fetch-depth: 0
-      - uses: actions/setup-node@lastet
-        with:
-          node-version: 22
-        
-      - name: Install pnpm
-        id: pnpm-install
-        uses: pnpm/action-setup@latest
-        with:
-          version: 10
-          run_install: false
+    - name: Checkout code
+      uses: actions/checkout@v4
 
-      - name: Install dependencies
-        run: pnpm i --frozen-lockfile
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 22
 
-      - name: Build
-        run: pnpm run build
+    - name: Install dependencies
+      run: npm ci
+      # 使用 ci 而不是 install 可以保持 lockfile 一致性
 
-      # - name: CreateTag
-      #   run git tag -a
-      - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
+    - name: Build project
+      run: npm run build
+
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./dist          # 构建输出目录
+        keep_files: false            # 清除目标分支的旧文件
+        destination_dir: .           # 部署到根目录（适用于项目站点）
