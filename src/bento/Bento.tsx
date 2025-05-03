@@ -79,7 +79,7 @@ const Bento: Component<BentoProps> = (props) => {
 
   function fitTight() {
     let windowWidth = document.body.clientWidth;
-    const rem = Math.max(14, windowWidth / 100);
+    const rem = Math.max(14, Math.min(18, windowWidth / 100));
     document.documentElement.style.fontSize = `${rem}px`;
 
     let newCol = 0,
