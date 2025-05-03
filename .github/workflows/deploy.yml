@@ -1,0 +1,38 @@
+name: build to my github
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@lastest
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@lastet
+        with:
+          node-version: 22
+        
+      - name: Install pnpm
+        id: pnpm-install
+        uses: pnpm/action-setup@latest
+        with:
+          version: 10
+          run_install: false
+
+      - name: Install dependencies
+        run: pnpm i --frozen-lockfile
+
+      - name: Build
+        run: pnpm run build
+
+      # - name: CreateTag
+      #   run git tag -a
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
