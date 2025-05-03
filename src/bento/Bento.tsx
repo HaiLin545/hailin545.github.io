@@ -5,7 +5,7 @@ import { BentoContext } from "./context";
 import { createSignal, children, createEffect, onMount, For, Show, batch } from "solid-js";
 import BentoItem from "./BentoItem";
 import { createStore } from "solid-js/store";
-import { sortMethods } from "./utils";
+import { sortMethods, debounce } from "./utils";
 
 type BentoProps = {
   layouts: {
@@ -35,8 +35,8 @@ type GridsType = number[][];
 
 const PAD = 20;
 const defaultLayout = {
-  row: 6,
-  col: 6,
+  row: 1,
+  col: 1,
   gap: 10,
   gridSize: 100,
   items: [],
@@ -96,8 +96,6 @@ const Bento: Component<BentoProps> = (props) => {
       newCol = 4;
       newSize = (windowWidth - pad) / newCol;
     }
-
-    // setIsInstant(true);
 
     if (newSize !== layouts.gridSize) {
       setLayouts("gridSize", newSize);
@@ -381,6 +379,7 @@ const Bento: Component<BentoProps> = (props) => {
     return { r: nr, c: nc, h, w };
   }
 
+  let _fitTimer = null;
   function handlePointerMove(e: PointerEvent) {
     if (!isDragging()) return;
     const target = e.target as HTMLElement;
@@ -396,6 +395,13 @@ const Bento: Component<BentoProps> = (props) => {
         top,
       };
     });
+
+    if (_fitTimer != null) return;
+    _fitTimer = setTimeout(() => {
+      _fitTimer = null;
+    }, 80);
+
+    console.log("fit timer");
 
     let newRect = _getNewRect(dx, dy);
     if (newRect.r === placeholderRect().r && newRect.c === placeholderRect().c) return;
@@ -421,6 +427,9 @@ const Bento: Component<BentoProps> = (props) => {
       });
       setIsDragging(false);
     });
+    setTimeout(() => {
+      !isDragging() && !isInstant() && setIsInstant(true);
+    }, 500);
 
     document.removeEventListener(layouts.pointerMoveEvent, handlePointerMove);
     document.removeEventListener(layouts.pointerUpEvent, handlePointerUp);

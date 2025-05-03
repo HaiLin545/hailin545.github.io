@@ -6,8 +6,15 @@ function sortByRowCol(a: { r: number; c: number }, b: { r: number; c: number }) 
   }
 }
 
-
-
+export function debounce(fn: Function, delay: number) {
+  let timer: NodeJS.Timeout | null = null;
+  return function (...args: any[]) {
+    if (timer) clearTimeout(timer);
+    timer = setTimeout(() => {
+      fn(...args);
+    }, delay);
+  };
+}
 
 export const sortMethods = {
   rowCol: sortByRowCol,
